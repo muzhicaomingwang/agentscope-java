@@ -118,3 +118,11 @@ AI coding instructions for AgentScope Java.
 - Lead with the result.
 - Include changed files, checks and results, and remaining gaps.
 - Keep unrelated findings brief and separate.
+
+## 7. Cursor Cloud specific instructions
+
+- The image provides JDK 21, which satisfies the Java 17 source target. Maven 3.9.16 and Go 1.26.9 are on the default PATH. Node.js 22 is already available.
+- Docker is required for the Service Postgres container. The boot start script launches `dockerd` directly because the VM has no systemd. Confirm with `docker info`.
+- `agentscope-service/frontend/package-lock.json` records `registry.anpm.alibaba-inc.com`, which is not reachable from Cloud Agents. Install the console with `npm ci --prefix agentscope-service/frontend --registry=https://registry.npmjs.org --replace-registry-host=always`.
+- Start the local Service stack from `agentscope-service` with `scripts/dev-up.sh`. The console is http://localhost:18080 with login `admin` / `admin`. Stop it with `scripts/dev-down.sh`.
+- `scripts/smoke.sh` stops at `POST /api/agents` because `product.Server.Register` does not call `registerAgents`. Login, `/api/environments`, and `/api/workspaces` are mounted.
